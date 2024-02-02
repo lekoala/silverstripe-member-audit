@@ -80,7 +80,7 @@ class MemberAuditSecurityAdminExtension extends Extension
             $auditTab->removeByName('members_audit');
 
             $gfc = GridFieldConfig_RecordViewer::create();
-            $MemberAuditGrid = new GridField('MemberAudit', _t('BaseSecurityAdminExtension.MemberAudit', "Members audit events"), $list, $gfc);
+            $MemberAuditGrid = new GridField('MemberAudit', _t('MemberAuditSecurityAdminExtension.MemberAudit', "Members audit events"), $list, $gfc);
             $MemberAuditGrid->setForm($form);
             /** @var GridFieldDataColumns $GridFieldDataColumns */
             $GridFieldDataColumns = $gfc->getComponentByType(GridFieldDataColumns::class);

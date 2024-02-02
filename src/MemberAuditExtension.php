@@ -11,10 +11,6 @@ use SilverStripe\Security\Security;
 use SilverStripe\Forms\ReadonlyField;
 
 /**
- * A lot of base functionalities for your members
- *
- * Most group of functions are grouped within traits when possible
- *
  * @link https://docs.silverstripe.org/en/5/developer_guides/extending/how_tos/track_member_logins/
  * @property \SilverStripe\Security\Member $owner
  * @property string $LastVisited
@@ -50,7 +46,7 @@ class MemberAuditExtension extends DataExtension
     /**
      * This is only called if Security::login_recording is set to true
      *
-     * @param array $data
+     * @param array<mixed> $data
      * @param HTTPRequest $request
      * @return void
      */
@@ -61,7 +57,7 @@ class MemberAuditExtension extends DataExtension
     /**
      * This is only called if Security::login_recording is set to true
      *
-     * @param array $data
+     * @param array<mixed> $data
      * @param HTTPRequest $request
      * @return void
      */

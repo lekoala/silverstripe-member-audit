@@ -7,6 +7,7 @@ SilverStripe\Security\Security:
   login_recording: true
   extensions:
     - LeKoala\MemberAudit\MemberAuditSecurityAdminExtension
+SilverStripe\Admin\SecurityAdmin:
   managed_models:
     - LeKoala\MemberAudit\MemberAudit
 SilverStripe\Security\Member:
