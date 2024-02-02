@@ -14,9 +14,10 @@ use SilverStripe\Forms\GridField\GridFieldConfig_RecordViewer;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
 
 /**
+ * MemberAuditSecurityAdminExtension
  * @property \SilverStripe\Admin\SecurityAdmin $owner
  */
-class BaseSecurityAdminExtension extends Extension
+class MemberAuditSecurityAdminExtension extends Extension
 {
     /**
      * @var array<string>
