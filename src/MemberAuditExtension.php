@@ -8,6 +8,7 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Security\Member;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Security;
+use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Forms\ReadonlyField;
 
 /**
