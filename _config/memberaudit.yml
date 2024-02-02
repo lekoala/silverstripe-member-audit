@@ -1,0 +1,14 @@
+---
+Name: memberaudit
+After:
+  - "#coresecurity"
+---
+SilverStripe\Security\Security:
+  login_recording: true
+  extensions:
+    - LeKoala\MemberAudit\MemberAuditSecurityAdminExtension
+  managed_models:
+    - LeKoala\MemberAudit\MemberAudit
+SilverStripe\Security\Member:
+  extensions:
+    - LeKoala\MemberAudit\MemberAuditExtension
