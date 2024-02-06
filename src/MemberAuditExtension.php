@@ -94,6 +94,28 @@ class MemberAuditExtension extends DataExtension
         ]);
     }
 
+    /**
+     * @param string $event
+     * @param string|array<mixed> $data
+     * @return int
+     */
+    public function audit($event, $data = null)
+    {
+        $r = new MemberAudit;
+        $r->MemberID = $this->owner->ID;
+        $r->Event = $event;
+        if ($data) {
+            if (is_array($data)) {
+                $data = json_encode($data);
+                if ($data === false) {
+                    $data = '';
+                }
+            }
+            $r->AuditData = $data;
+        }
+        return $r->write();
+    }
+
     protected function logVisit(): void
     {
         if (!Security::database_is_ready()) {
