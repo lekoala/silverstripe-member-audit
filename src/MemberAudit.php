@@ -84,6 +84,22 @@ class MemberAudit extends DataObject
         }
     }
 
+    /**
+     * Static shortcut
+     * @param string $event
+     * @param string|array<mixed> $data
+     * @return int
+     */
+    public static function audit($event, $data = null)
+    {
+        /** @var MemberAuditExtension|null $m */
+        $m = Security::getCurrentUser();
+        if ($m) {
+            return $m->audit($event, $data);
+        }
+        return 0;
+    }
+
     public static function clearOldRecords(): void
     {
         $keep_duration = self::config()->keep_duration;
