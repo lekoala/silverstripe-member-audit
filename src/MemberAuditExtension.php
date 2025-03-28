@@ -16,7 +16,7 @@ use SilverStripe\Forms\ReadonlyField;
  * @property \SilverStripe\Security\Member $owner
  * @property string $LastVisited
  * @property int $NumVisit
- * @method \SilverStripe\ORM\DataList|\LeKoala\MemberAudit\MemberAudit[] Audits()
+ * @method \SilverStripe\ORM\DataList<\LeKoala\MemberAudit\MemberAudit> Audits()
  */
 class MemberAuditExtension extends DataExtension
 {
