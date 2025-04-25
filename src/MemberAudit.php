@@ -33,6 +33,12 @@ class MemberAudit extends DataObject
     private static $table_name = 'MemberAudit';
 
     /**
+     * @link https://docs.silverstripe.org/en/5/developer_guides/security/sudo_mode/
+     * @var bool
+     */
+    private static bool $require_sudo_mode = true;
+
+    /**
      * @var array<string,string>
      */
     private static $db = [
@@ -50,10 +56,20 @@ class MemberAudit extends DataObject
     ];
 
     /**
+     * @var array<string,mixed>
+     */
+    private static $index = [
+        'Event' => true,
+    ];
+
+    /**
      * @var array<string>
      */
     private static $summary_fields = [
-        'Created', 'Event', 'SourceMember.Title', 'AuditData.LimitCharacters'
+        'Created',
+        'Event',
+        'SourceMember.Title',
+        'AuditDataShort'
     ];
 
     /**
@@ -82,6 +98,25 @@ class MemberAudit extends DataObject
         if (Controller::has_curr() && !$this->IP) {
             $this->IP = Controller::curr()->getRequest()->getIP();
         }
+    }
+
+    public function FormattedAuditData(): string
+    {
+        if (!$this->AuditData) {
+            return '';
+        }
+        if ($this->isJson()) {
+            return json_encode(json_decode($this->AuditData, JSON_PRETTY_PRINT));
+        }
+        return $this->AuditData;
+    }
+
+    public function isJson(): bool
+    {
+        if (function_exists('json_validate')) {
+            return json_validate($this->AuditData);
+        }
+        return str_starts_with($this->AuditData, '[') || str_starts_with($this->AuditData, '{');
     }
 
     /**
@@ -137,6 +172,6 @@ class MemberAudit extends DataObject
 
     public function AuditDataShort(): string
     {
-        return substr((string)$this->AuditData, 0, 100) . '...';
+        return substr((string)$this->FormattedAuditData(), 0, 100) . '...';
     }
 }

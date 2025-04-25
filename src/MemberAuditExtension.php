@@ -6,9 +6,9 @@ use SilverStripe\ORM\DB;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Security\Member;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Security;
 use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\Extension;
 use SilverStripe\Forms\ReadonlyField;
 
 /**
@@ -18,7 +18,7 @@ use SilverStripe\Forms\ReadonlyField;
  * @property int $NumVisit
  * @method \SilverStripe\ORM\DataList<\LeKoala\MemberAudit\MemberAudit> Audits()
  */
-class MemberAuditExtension extends DataExtension
+class MemberAuditExtension extends Extension
 {
     /**
      * @var array<string,string>
@@ -42,6 +42,7 @@ class MemberAuditExtension extends DataExtension
      */
     public function authenticationSucceeded()
     {
+        // empty
     }
 
     /**
@@ -53,6 +54,7 @@ class MemberAuditExtension extends DataExtension
      */
     public function authenticationFailed($data, $request)
     {
+        // empty
     }
 
     /**
@@ -64,6 +66,7 @@ class MemberAuditExtension extends DataExtension
      */
     public function authenticationFailedUnknownUser($data, $request)
     {
+        // empty
     }
 
     /**
@@ -116,6 +119,9 @@ class MemberAuditExtension extends DataExtension
         return $r->write();
     }
 
+    /**
+     * Updates the LastVisited entry and increment NumVisit
+     */
     protected function logVisit(): void
     {
         if (!Security::database_is_ready()) {

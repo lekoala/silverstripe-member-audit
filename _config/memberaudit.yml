@@ -5,11 +5,11 @@ After:
 ---
 SilverStripe\Security\Security:
   login_recording: true
-  extensions:
-    - LeKoala\MemberAudit\MemberAuditSecurityAdminExtension
 SilverStripe\Admin\SecurityAdmin:
   managed_models:
     - LeKoala\MemberAudit\MemberAudit
+  extensions:
+    - LeKoala\MemberAudit\MemberAuditSecurityAdminExtension
 SilverStripe\Security\Member:
   extensions:
     - LeKoala\MemberAudit\MemberAuditExtension

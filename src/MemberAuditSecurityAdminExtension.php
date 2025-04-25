@@ -4,14 +4,11 @@ namespace LeKoala\MemberAudit;
 
 use SilverStripe\Forms\Form;
 use SilverStripe\Core\Extension;
-use SilverStripe\Security\Member;
 use SilverStripe\Admin\SecurityAdmin;
 use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use SilverStripe\Forms\GridField\GridFieldConfig;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordViewer;
-use SilverStripe\Forms\GridField\GridFieldDataColumns;
 
 /**
  * MemberAuditSecurityAdminExtension
@@ -19,13 +16,6 @@ use SilverStripe\Forms\GridField\GridFieldDataColumns;
  */
 class MemberAuditSecurityAdminExtension extends Extension
 {
-    /**
-     * @var array<string>
-     */
-    private static $allowed_actions = [
-        'members_audit',
-    ];
-
     protected function getSecurityAdmin(): SecurityAdmin
     {
         return $this->owner;
@@ -40,7 +30,7 @@ class MemberAuditSecurityAdminExtension extends Extension
     {
         $url = explode("/", $this->owner->getRequest()->getURL());
         $segment = $url[2] ?? "";
-        return $segment == "members_audit";
+        return $segment == "LeKoala-MemberAudit-MemberAudit";
     }
 
     /**
@@ -50,6 +40,7 @@ class MemberAuditSecurityAdminExtension extends Extension
     public function updateGridFieldConfig(GridFieldConfig $config)
     {
         if ($this->isInMemberAuditTab()) {
+            $config->removeComponentsByType(GridFieldAddNewButton::class);
             $config->removeComponentsByType(GridFieldImportButton::class);
         }
     }
@@ -61,36 +52,7 @@ class MemberAuditSecurityAdminExtension extends Extension
     public function updateEditForm(Form $form)
     {
         if ($this->isInMemberAuditTab()) {
-            $this->addMemberAuditTab($form);
-        }
-    }
-
-    /**
-     * @param Form $form
-     * @return void
-     */
-    protected function addMemberAuditTab(Form $form)
-    {
-        MemberAudit::clearOldRecords();
-
-        $MemberAudit_SNG = MemberAudit::singleton();
-        $list = MemberAudit::get();
-        if ($list->count()) {
-            $auditTab = $form->Fields();
-            $auditTab->removeByName('members_audit');
-
-            $gfc = GridFieldConfig_RecordViewer::create();
-            $MemberAuditGrid = new GridField('MemberAudit', _t('MemberAuditSecurityAdminExtension.MemberAudit', "Members audit events"), $list, $gfc);
-            $MemberAuditGrid->setForm($form);
-            /** @var GridFieldDataColumns $GridFieldDataColumns */
-            $GridFieldDataColumns = $gfc->getComponentByType(GridFieldDataColumns::class);
-            $GridFieldDataColumns->setDisplayFields([
-                'Created' => $MemberAudit_SNG->fieldLabel('Created'),
-                'Member.Title' => $MemberAudit_SNG->fieldLabel('Member'),
-                'Event' => $MemberAudit_SNG->fieldLabel('Event'),
-                'AuditDataShort' => $MemberAudit_SNG->fieldLabel('AuditData'),
-            ]);
-            $auditTab->push($MemberAuditGrid);
+            MemberAudit::clearOldRecords();
         }
     }
 }
